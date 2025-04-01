@@ -1,9 +1,9 @@
-load("//tools:defaults.bzl", "ng_module", "ng_web_test_suite")
-load("//tools:defaults2.bzl", "ts_project")
+load("//tools:defaults.bzl", "ng_web_test_suite")
+load("//tools:defaults2.bzl", "ng_project", "ts_project")
 
 package(default_visibility = ["//visibility:public"])
 
-ng_module(
+ng_project(
     name = "menu",
     srcs = glob(
         ["**/*.ts"],
@@ -14,6 +14,9 @@ ng_module(
         "**/*.css",
     ]),
     deps = [
+        "//:node_modules/@angular/core",
+        "//:node_modules/@angular/platform-browser",
+        "//:node_modules/@types/jasmine",
         "//src/cdk/overlay",
         "//src/cdk/testing",
         "//src/cdk/testing/testbed",
@@ -21,8 +24,6 @@ ng_module(
         "//src/material/icon",
         "//src/material/menu",
         "//src/material/menu/testing",
-        "@npm//@angular/platform-browser",
-        "@npm//@types/jasmine",
     ],
 )
 
@@ -39,16 +40,14 @@ ts_project(
     name = "unit_tests_lib",
     testonly = True,
     srcs = glob(["**/*.spec.ts"]),
-    interop_deps = [
+    deps = [
         ":menu",
+        "//:node_modules/@angular/core",
+        "//:node_modules/@angular/platform-browser",
         "//src/cdk/testing",
         "//src/cdk/testing/testbed",
         "//src/material/menu",
         "//src/material/menu/testing",
-    ],
-    deps = [
-        "//:node_modules/@angular/core",
-        "//:node_modules/@angular/platform-browser",
     ],
 )
 

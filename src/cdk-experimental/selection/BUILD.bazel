@@ -1,22 +1,23 @@
-load("//tools:defaults.bzl", "ng_module", "ng_web_test_suite")
-load("//tools:defaults2.bzl", "ts_project")
+load("//tools:defaults.bzl", "ng_web_test_suite")
+load("//tools:defaults2.bzl", "ng_project", "ts_project")
 
 package(default_visibility = ["//visibility:public"])
 
-ng_module(
+ng_project(
     name = "selection",
     srcs = glob(
         ["**/*.ts"],
         exclude = ["**/*.spec.ts"],
     ),
     deps = [
+        "//:node_modules/@angular/common",
+        "//:node_modules/@angular/core",
+        "//:node_modules/@angular/forms",
+        "//:node_modules/rxjs",
         "//src:dev_mode_types",
         "//src/cdk/coercion",
         "//src/cdk/collections",
         "//src/cdk/table",
-        "@npm//@angular/core",
-        "@npm//@angular/forms",
-        "@npm//rxjs",
     ],
 )
 
@@ -27,14 +28,12 @@ ts_project(
         ["**/*.spec.ts"],
         exclude = ["**/*.e2e.spec.ts"],
     ),
-    interop_deps = [
-        ":selection",
-        "//src/cdk/table",
-        "//src/cdk/testing/private",
-    ],
     deps = [
+        ":selection",
         "//:node_modules/@angular/common",
         "//:node_modules/@angular/core",
+        "//src/cdk/table",
+        "//src/cdk/testing/private",
     ],
 )
 

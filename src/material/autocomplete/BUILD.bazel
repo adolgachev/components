@@ -2,16 +2,15 @@ load(
     "//tools:defaults.bzl",
     "extract_tokens",
     "markdown_to_html",
-    "ng_module",
     "ng_web_test_suite",
     "sass_binary",
     "sass_library",
 )
-load("//tools:defaults2.bzl", "ts_project")
+load("//tools:defaults2.bzl", "ng_project", "ts_project")
 
 package(default_visibility = ["//visibility:public"])
 
-ng_module(
+ng_project(
     name = "autocomplete",
     srcs = glob(
         ["**/*.ts"],
@@ -23,13 +22,16 @@ ng_module(
         ":autocomplete_scss",
     ] + glob(["**/*.html"]),
     deps = [
+        "//:node_modules/@angular/common",
+        "//:node_modules/@angular/core",
+        "//:node_modules/@angular/forms",
+        "//:node_modules/rxjs",
         "//src/cdk/a11y",
         "//src/cdk/coercion",
         "//src/cdk/overlay",
         "//src/cdk/scrolling",
         "//src/material/core",
         "//src/material/form-field",
-        "@npm//@angular/common",
     ],
 )
 
@@ -59,8 +61,12 @@ ts_project(
             "**/*.e2e.spec.ts",
         ],
     ),
-    interop_deps = [
+    deps = [
         ":autocomplete",
+        "//:node_modules/@angular/core",
+        "//:node_modules/@angular/forms",
+        "//:node_modules/@angular/platform-browser",
+        "//:node_modules/rxjs",
         "//src/cdk/bidi",
         "//src/cdk/keycodes",
         "//src/cdk/overlay",
@@ -70,12 +76,6 @@ ts_project(
         "//src/material/core",
         "//src/material/form-field",
         "//src/material/input",
-    ],
-    deps = [
-        "//:node_modules/@angular/core",
-        "//:node_modules/@angular/forms",
-        "//:node_modules/@angular/platform-browser",
-        "//:node_modules/rxjs",
     ],
 )
 

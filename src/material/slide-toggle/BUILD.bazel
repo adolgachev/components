@@ -2,16 +2,15 @@ load(
     "//tools:defaults.bzl",
     "extract_tokens",
     "markdown_to_html",
-    "ng_module",
     "ng_web_test_suite",
     "sass_binary",
     "sass_library",
 )
-load("//tools:defaults2.bzl", "ts_project")
+load("//tools:defaults2.bzl", "ng_project", "ts_project")
 
 package(default_visibility = ["//visibility:public"])
 
-ng_module(
+ng_project(
     name = "slide-toggle",
     srcs = glob(
         ["**/*.ts"],
@@ -22,10 +21,11 @@ ng_module(
     ),
     assets = [":slide_toggle_scss"] + glob(["**/*.html"]),
     deps = [
+        "//:node_modules/@angular/animations",
+        "//:node_modules/@angular/core",
+        "//:node_modules/@angular/forms",
+        "//:node_modules/rxjs",
         "//src/material/core",
-        "@npm//@angular/animations",
-        "@npm//@angular/core",
-        "@npm//@angular/forms",
     ],
 )
 
@@ -52,16 +52,14 @@ ts_project(
     srcs = glob(
         ["**/*.spec.ts"],
     ),
-    interop_deps = [
-        ":slide-toggle",
-        "//src/cdk/a11y",
-        "//src/cdk/bidi",
-        "//src/cdk/testing/private",
-    ],
     deps = [
+        ":slide-toggle",
         "//:node_modules/@angular/core",
         "//:node_modules/@angular/forms",
         "//:node_modules/@angular/platform-browser",
+        "//src/cdk/a11y",
+        "//src/cdk/bidi",
+        "//src/cdk/testing/private",
     ],
 )
 

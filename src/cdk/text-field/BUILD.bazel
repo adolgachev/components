@@ -1,16 +1,15 @@
 load(
     "//tools:defaults.bzl",
     "markdown_to_html",
-    "ng_module",
     "ng_web_test_suite",
     "sass_binary",
     "sass_library",
 )
-load("//tools:defaults2.bzl", "ts_project")
+load("//tools:defaults2.bzl", "ng_project", "ts_project")
 
 package(default_visibility = ["//visibility:public"])
 
-ng_module(
+ng_project(
     name = "text-field",
     srcs = glob(
         ["**/*.ts"],
@@ -20,11 +19,12 @@ ng_module(
         ":text-field-prebuilt.css",
     ],
     deps = [
+        "//:node_modules/@angular/common",
+        "//:node_modules/@angular/core",
+        "//:node_modules/rxjs",
         "//src/cdk/coercion",
         "//src/cdk/platform",
         "//src/cdk/private",
-        "@npm//@angular/core",
-        "@npm//rxjs",
     ],
 )
 
@@ -46,16 +46,14 @@ ts_project(
         ["**/*.spec.ts"],
         exclude = ["**/*.e2e.spec.ts"],
     ),
-    interop_deps = [
-        ":text-field",
-        "//src/cdk/platform",
-        "//src/cdk/testing/private",
-    ],
     deps = [
+        ":text-field",
         "//:node_modules/@angular/core",
         "//:node_modules/@angular/forms",
         "//:node_modules/@angular/platform-browser",
         "//:node_modules/rxjs",
+        "//src/cdk/platform",
+        "//src/cdk/testing/private",
     ],
 )
 

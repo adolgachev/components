@@ -2,16 +2,15 @@ load(
     "//tools:defaults.bzl",
     "extract_tokens",
     "markdown_to_html",
-    "ng_module",
     "ng_web_test_suite",
     "sass_binary",
     "sass_library",
 )
-load("//tools:defaults2.bzl", "ts_project")
+load("//tools:defaults2.bzl", "ng_project", "ts_project")
 
 package(default_visibility = ["//visibility:public"])
 
-ng_module(
+ng_project(
     name = "table",
     srcs = glob(
         ["**/*.ts"],
@@ -19,11 +18,13 @@ ng_module(
     ),
     assets = [":table_scss"] + glob(["**/*.html"]),
     deps = [
+        "//:node_modules/@angular/common",
+        "//:node_modules/@angular/core",
+        "//:node_modules/rxjs",
         "//src/cdk/table",
         "//src/material/core",
         "//src/material/paginator",
         "//src/material/sort",
-        "@npm//@angular/core",
     ],
 )
 
@@ -62,16 +63,14 @@ ts_project(
     srcs = glob(
         ["**/*.spec.ts"],
     ),
-    interop_deps = [
-        ":table",
-        "//src/cdk/table",
-        "//src/material/paginator",
-        "//src/material/sort",
-    ],
     deps = [
+        ":table",
         "//:node_modules/@angular/core",
         "//:node_modules/@angular/platform-browser",
         "//:node_modules/rxjs",
+        "//src/cdk/table",
+        "//src/material/paginator",
+        "//src/material/sort",
     ],
 )
 

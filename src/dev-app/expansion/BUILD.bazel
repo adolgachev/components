@@ -1,8 +1,9 @@
-load("//tools:defaults.bzl", "ng_module", "sass_binary")
+load("//tools:defaults.bzl", "sass_binary")
+load("//tools:defaults2.bzl", "ng_project")
 
 package(default_visibility = ["//visibility:public"])
 
-ng_module(
+ng_project(
     name = "expansion",
     srcs = glob(["**/*.ts"]),
     assets = [
@@ -10,6 +11,8 @@ ng_module(
         ":expansion_demo_scss",
     ],
     deps = [
+        "//:node_modules/@angular/core",
+        "//:node_modules/@angular/forms",
         "//src/cdk/accordion",
         "//src/material/button",
         "//src/material/checkbox",
@@ -18,7 +21,6 @@ ng_module(
         "//src/material/input",
         "//src/material/radio",
         "//src/material/slide-toggle",
-        "@npm//@angular/forms",
     ],
 )
 

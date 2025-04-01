@@ -1,8 +1,8 @@
-load("//tools:defaults.bzl", "ng_module")
+load("//tools:defaults2.bzl", "ng_project")
 
 package(default_visibility = ["//visibility:public"])
 
-ng_module(
+ng_project(
     name = "text-field",
     srcs = glob(["**/*.ts"]),
     assets = glob([
@@ -10,6 +10,8 @@ ng_module(
         "**/*.css",
     ]),
     deps = [
+        "//:node_modules/@angular/core",
+        "//:node_modules/rxjs",
         "//src/cdk/text-field",
         "//src/material/button",
         "//src/material/input",

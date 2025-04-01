@@ -2,16 +2,15 @@ load(
     "//tools:defaults.bzl",
     "extract_tokens",
     "markdown_to_html",
-    "ng_module",
     "ng_web_test_suite",
     "sass_binary",
     "sass_library",
 )
-load("//tools:defaults2.bzl", "ts_project")
+load("//tools:defaults2.bzl", "ng_project", "ts_project")
 
 package(default_visibility = ["//visibility:public"])
 
-ng_module(
+ng_project(
     name = "radio",
     srcs = glob(
         ["**/*.ts"],
@@ -19,10 +18,12 @@ ng_module(
     ),
     assets = [":radio_scss"] + glob(["**/*.html"]),
     deps = [
+        "//:node_modules/@angular/core",
+        "//:node_modules/@angular/forms",
+        "//:node_modules/rxjs",
         "//src/cdk/a11y",
         "//src/cdk/collections",
         "//src/material/core",
-        "@npm//@angular/forms",
     ],
 )
 
@@ -68,15 +69,13 @@ ts_project(
     srcs = glob(
         ["**/*.spec.ts"],
     ),
-    interop_deps = [
-        ":radio",
-        "//src/cdk/testing/private",
-    ],
     deps = [
+        ":radio",
         "//:node_modules/@angular/common",
         "//:node_modules/@angular/core",
         "//:node_modules/@angular/forms",
         "//:node_modules/@angular/platform-browser",
+        "//src/cdk/testing/private",
     ],
 )
 

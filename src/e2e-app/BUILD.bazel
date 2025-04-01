@@ -1,6 +1,7 @@
-load("//tools:defaults.bzl", "devmode_esbuild", "esbuild_config", "http_server", "ng_module", "sass_binary")
+load("//tools:defaults.bzl", "devmode_esbuild", "esbuild_config", "http_server", "sass_binary")
 load("//src/components-examples:config.bzl", "ALL_EXAMPLES")
 load("//tools/angular:index.bzl", "LINKER_PROCESSED_FW_PACKAGES")
+load("//tools:defaults2.bzl", "ng_project")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -19,7 +20,7 @@ exports_files([
     "devserver-configure.js",
 ])
 
-ng_module(
+ng_project(
     name = "e2e-app",
     testonly = True,
     srcs = glob(
@@ -33,6 +34,11 @@ ng_module(
         exclude = ["index.html"],
     ),
     deps = [
+        "//:node_modules/@angular/animations",
+        "//:node_modules/@angular/core",
+        "//:node_modules/@angular/forms",
+        "//:node_modules/@angular/platform-browser",
+        "//:node_modules/@angular/router",
         "//src/cdk-experimental/scrolling",
         "//src/cdk/overlay",
         "//src/cdk/scrolling",
@@ -40,11 +46,6 @@ ng_module(
         "//src/components-examples/private",
         "//src/material/core",
         "//src/material/slider",
-        "@npm//@angular/animations",
-        "@npm//@angular/core",
-        "@npm//@angular/forms",
-        "@npm//@angular/platform-browser",
-        "@npm//@angular/router",
     ],
 )
 
@@ -77,7 +78,7 @@ devmode_esbuild(
     # Note: We add all linker-processed FW packages as dependencies here so that ESBuild will
     # map all framework packages to their linker-processed bundles from `tools/angular`.
     deps = LINKER_PROCESSED_FW_PACKAGES + [
-        ":e2e-app",
+        ":e2e-app_legacy",
     ],
 )
 

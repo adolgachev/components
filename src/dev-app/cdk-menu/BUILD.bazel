@@ -1,8 +1,8 @@
-load("//tools:defaults.bzl", "ng_module")
+load("//tools:defaults2.bzl", "ng_project")
 
 package(default_visibility = ["//visibility:public"])
 
-ng_module(
+ng_project(
     name = "cdk-menu",
     srcs = glob(["**/*.ts"]),
     assets = [
@@ -10,6 +10,7 @@ ng_module(
         "cdk-menu-demo.css",
     ],
     deps = [
+        "//:node_modules/@angular/core",
         "//src/cdk/menu",
         "//src/components-examples/cdk/menu",
     ],

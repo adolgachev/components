@@ -1,11 +1,12 @@
 load("@build_bazel_rules_nodejs//:index.bzl", "pkg_web")
-load("//tools:defaults.bzl", "devmode_esbuild", "esbuild_config", "http_server", "ng_module", "sass_binary")
+load("//tools:defaults.bzl", "devmode_esbuild", "esbuild_config", "http_server", "sass_binary")
 load("//src/components-examples:config.bzl", "ALL_EXAMPLES")
 load("//tools/angular:index.bzl", "LINKER_PROCESSED_FW_PACKAGES")
+load("//tools:defaults2.bzl", "ng_project")
 
 package(default_visibility = ["//visibility:public"])
 
-ng_module(
+ng_project(
     name = "dev-app",
     srcs = [
         "dev-app.ts",
@@ -13,6 +14,12 @@ ng_module(
         "routes.ts",
     ],
     deps = [
+        "//:node_modules/@angular/common",
+        "//:node_modules/@angular/compiler",
+        "//:node_modules/@angular/core",
+        "//:node_modules/@angular/localize",
+        "//:node_modules/@angular/platform-browser",
+        "//:node_modules/@angular/router",
         "//src/cdk/bidi",
         "//src/cdk/overlay",
         "//src/dev-app/autocomplete",
@@ -81,9 +88,6 @@ ng_module(
         "//src/dev-app/virtual-scroll",
         "//src/dev-app/youtube-player",
         "//src/material/core",
-        "@npm//@angular/compiler",
-        "@npm//@angular/localize",
-        "@npm//@angular/router",
     ],
 )
 
@@ -104,7 +108,7 @@ devmode_esbuild(
     # Note: We add all linker-processed FW packages as dependencies here so that ESBuild will
     # map all framework packages to their linker-processed bundles from `tools/angular`.
     deps = LINKER_PROCESSED_FW_PACKAGES + [
-        ":dev-app",
+        ":dev-app_legacy",
     ],
 )
 

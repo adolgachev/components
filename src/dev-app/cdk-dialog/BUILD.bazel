@@ -1,8 +1,9 @@
-load("//tools:defaults.bzl", "ng_module", "sass_binary")
+load("//tools:defaults.bzl", "sass_binary")
+load("//tools:defaults2.bzl", "ng_project")
 
 package(default_visibility = ["//visibility:public"])
 
-ng_module(
+ng_project(
     name = "cdk-dialog",
     srcs = glob(["**/*.ts"]),
     assets = [
@@ -10,8 +11,10 @@ ng_module(
         ":dialog_demo_scss",
     ],
     deps = [
+        "//:node_modules/@angular/core",
+        "//:node_modules/@angular/forms",
+        "//:node_modules/rxjs",
         "//src/cdk/dialog",
-        "@npm//@angular/forms",
     ],
 )
 

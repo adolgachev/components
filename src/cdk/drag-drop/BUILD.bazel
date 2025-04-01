@@ -1,15 +1,14 @@
 load(
     "//tools:defaults.bzl",
     "markdown_to_html",
-    "ng_module",
     "ng_web_test_suite",
     "sass_binary",
 )
-load("//tools:defaults2.bzl", "ts_project")
+load("//tools:defaults2.bzl", "ng_project", "ts_project")
 
 package(default_visibility = ["//visibility:public"])
 
-ng_module(
+ng_project(
     name = "drag-drop",
     srcs = glob(
         ["**/*.ts"],
@@ -19,6 +18,9 @@ ng_module(
         ":resets_scss",
     ],
     deps = [
+        "//:node_modules/@angular/common",
+        "//:node_modules/@angular/core",
+        "//:node_modules/rxjs",
         "//src:dev_mode_types",
         "//src/cdk/a11y",
         "//src/cdk/bidi",
@@ -26,9 +28,6 @@ ng_module(
         "//src/cdk/platform",
         "//src/cdk/private",
         "//src/cdk/scrolling",
-        "@npm//@angular/common",
-        "@npm//@angular/core",
-        "@npm//rxjs",
     ],
 )
 
@@ -39,17 +38,15 @@ ts_project(
         ["**/*.spec.ts"],
         exclude = ["**/*.e2e.spec.ts"],
     ),
-    interop_deps = [
+    deps = [
         ":drag-drop",
+        "//:node_modules/@angular/common",
+        "//:node_modules/@angular/core",
+        "//:node_modules/rxjs",
         "//src/cdk/bidi",
         "//src/cdk/platform",
         "//src/cdk/scrolling",
         "//src/cdk/testing/private",
-    ],
-    deps = [
-        "//:node_modules/@angular/common",
-        "//:node_modules/@angular/core",
-        "//:node_modules/rxjs",
     ],
 )
 

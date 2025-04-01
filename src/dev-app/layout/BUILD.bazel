@@ -1,8 +1,9 @@
-load("//tools:defaults.bzl", "ng_module", "sass_binary")
+load("//tools:defaults.bzl", "sass_binary")
+load("//tools:defaults2.bzl", "ng_project")
 
 package(default_visibility = ["//visibility:public"])
 
-ng_module(
+ng_project(
     name = "layout",
     srcs = glob(["**/*.ts"]),
     assets = [
@@ -10,6 +11,7 @@ ng_module(
         ":layout_demo_scss",
     ],
     deps = [
+        "//:node_modules/@angular/core",
         "//src/cdk/layout",
         "//src/components-examples/cdk/layout",
     ],

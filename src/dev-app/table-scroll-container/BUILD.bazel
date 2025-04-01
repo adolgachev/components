@@ -1,8 +1,9 @@
-load("//tools:defaults.bzl", "ng_module", "sass_binary")
+load("//tools:defaults.bzl", "sass_binary")
+load("//tools:defaults2.bzl", "ng_project")
 
 package(default_visibility = ["//visibility:public"])
 
-ng_module(
+ng_project(
     name = "table-scroll-container",
     srcs = glob(["**/*.ts"]),
     assets = [
@@ -10,12 +11,12 @@ ng_module(
         ":table_scroll_container_demo_scss",
     ],
     deps = [
+        "//:node_modules/@angular/common",
+        "//:node_modules/@angular/core",
         "//src/cdk-experimental/table-scroll-container",
         "//src/material/button",
         "//src/material/button-toggle",
         "//src/material/table",
-        "@npm//@angular/common",
-        "@npm//@angular/core",
     ],
 )
 

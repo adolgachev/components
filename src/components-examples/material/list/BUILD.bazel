@@ -1,9 +1,9 @@
-load("//tools:defaults.bzl", "ng_module", "ng_web_test_suite")
-load("//tools:defaults2.bzl", "ts_project")
+load("//tools:defaults.bzl", "ng_web_test_suite")
+load("//tools:defaults2.bzl", "ng_project", "ts_project")
 
 package(default_visibility = ["//visibility:public"])
 
-ng_module(
+ng_project(
     name = "list",
     srcs = glob(
         ["**/*.ts"],
@@ -14,13 +14,16 @@ ng_module(
         "**/*.css",
     ]),
     deps = [
+        "//:node_modules/@angular/common",
+        "//:node_modules/@angular/core",
+        "//:node_modules/@angular/forms",
+        "//:node_modules/@angular/platform-browser",
+        "//:node_modules/@types/jasmine",
         "//src/cdk/testing",
         "//src/cdk/testing/testbed",
         "//src/material/icon",
         "//src/material/list",
         "//src/material/list/testing",
-        "@npm//@angular/platform-browser",
-        "@npm//@types/jasmine",
     ],
 )
 
@@ -37,17 +40,15 @@ ts_project(
     name = "unit_tests_lib",
     testonly = True,
     srcs = glob(["**/*.spec.ts"]),
-    interop_deps = [
+    deps = [
         ":list",
+        "//:node_modules/@angular/core",
+        "//:node_modules/@angular/platform-browser",
+        "//:node_modules/@types/jasmine",
         "//src/cdk/testing",
         "//src/cdk/testing/testbed",
         "//src/material/list",
         "//src/material/list/testing",
-    ],
-    deps = [
-        "//:node_modules/@angular/core",
-        "//:node_modules/@angular/platform-browser",
-        "//:node_modules/@types/jasmine",
     ],
 )
 

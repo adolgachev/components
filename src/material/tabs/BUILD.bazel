@@ -2,16 +2,15 @@ load(
     "//tools:defaults.bzl",
     "extract_tokens",
     "markdown_to_html",
-    "ng_module",
     "ng_web_test_suite",
     "sass_binary",
     "sass_library",
 )
-load("//tools:defaults2.bzl", "ts_project")
+load("//tools:defaults2.bzl", "ng_project", "ts_project")
 
 package(default_visibility = ["//visibility:public"])
 
-ng_module(
+ng_project(
     name = "tabs",
     srcs = glob(
         ["**/*.ts"],
@@ -25,6 +24,9 @@ ng_module(
         ":tab-nav-bar/tab-link.css",
     ] + glob(["**/*.html"]),
     deps = [
+        "//:node_modules/@angular/common",
+        "//:node_modules/@angular/core",
+        "//:node_modules/rxjs",
         "//src:dev_mode_types",
         "//src/cdk/a11y",
         "//src/cdk/bidi",
@@ -36,8 +38,6 @@ ng_module(
         "//src/cdk/portal",
         "//src/cdk/scrolling",
         "//src/material/core",
-        "@npm//@angular/common",
-        "@npm//@angular/core",
     ],
 )
 
@@ -91,8 +91,12 @@ ts_project(
     srcs = glob(
         ["**/*.spec.ts"],
     ),
-    interop_deps = [
+    deps = [
         ":tabs",
+        "//:node_modules/@angular/common",
+        "//:node_modules/@angular/core",
+        "//:node_modules/@angular/platform-browser",
+        "//:node_modules/rxjs",
         "//src/cdk/bidi",
         "//src/cdk/keycodes",
         "//src/cdk/observers",
@@ -102,12 +106,6 @@ ts_project(
         "//src/cdk/testing/private",
         "//src/cdk/testing/testbed",
         "//src/material/core",
-    ],
-    deps = [
-        "//:node_modules/@angular/common",
-        "//:node_modules/@angular/core",
-        "//:node_modules/@angular/platform-browser",
-        "//:node_modules/rxjs",
     ],
 )
 

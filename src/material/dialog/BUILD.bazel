@@ -2,16 +2,15 @@ load(
     "//tools:defaults.bzl",
     "extract_tokens",
     "markdown_to_html",
-    "ng_module",
     "ng_web_test_suite",
     "sass_binary",
     "sass_library",
 )
-load("//tools:defaults2.bzl", "ts_project")
+load("//tools:defaults2.bzl", "ng_project", "ts_project")
 
 package(default_visibility = ["//visibility:public"])
 
-ng_module(
+ng_project(
     name = "dialog",
     srcs = glob(
         ["**/*.ts"],
@@ -19,6 +18,8 @@ ng_module(
     ),
     assets = [":dialog_scss"] + glob(["**/*.html"]),
     deps = [
+        "//:node_modules/@angular/core",
+        "//:node_modules/rxjs",
         "//src/cdk/dialog",
         "//src/cdk/overlay",
         "//src/cdk/portal",
@@ -53,8 +54,12 @@ ts_project(
     srcs = glob(
         ["**/*.spec.ts"],
     ),
-    interop_deps = [
+    deps = [
         ":dialog",
+        "//:node_modules/@angular/common",
+        "//:node_modules/@angular/core",
+        "//:node_modules/@angular/platform-browser",
+        "//:node_modules/rxjs",
         "//src/cdk/a11y",
         "//src/cdk/bidi",
         "//src/cdk/dialog",
@@ -63,12 +68,6 @@ ts_project(
         "//src/cdk/platform",
         "//src/cdk/scrolling",
         "//src/cdk/testing/private",
-    ],
-    deps = [
-        "//:node_modules/@angular/common",
-        "//:node_modules/@angular/core",
-        "//:node_modules/@angular/platform-browser",
-        "//:node_modules/rxjs",
     ],
 )
 

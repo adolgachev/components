@@ -1,26 +1,25 @@
 load(
     "//tools:defaults.bzl",
-    "ng_module",
     "ng_web_test_suite",
 )
-load("//tools:defaults2.bzl", "ts_project")
+load("//tools:defaults2.bzl", "ng_project", "ts_project")
 
 package(default_visibility = ["//visibility:public"])
 
-ng_module(
+ng_project(
     name = "table-scroll-container",
     srcs = glob(
         ["**/*.ts"],
         exclude = ["**/*.spec.ts"],
     ),
     deps = [
+        "//:node_modules/@angular/common",
+        "//:node_modules/@angular/core",
+        "//:node_modules/rxjs",
         "//src/cdk/a11y",
         "//src/cdk/bidi",
         "//src/cdk/platform",
         "//src/cdk/table",
-        "@npm//@angular/common",
-        "@npm//@angular/core",
-        "@npm//rxjs",
     ],
 )
 
@@ -31,15 +30,13 @@ ts_project(
         ["**/*.spec.ts"],
         exclude = ["**/*.e2e.spec.ts"],
     ),
-    interop_deps = [
+    deps = [
         ":table-scroll-container",
+        "//:node_modules/@angular/core",
+        "//:node_modules/rxjs",
         "//src/cdk/collections",
         "//src/cdk/platform",
         "//src/cdk/table",
-    ],
-    deps = [
-        "//:node_modules/@angular/core",
-        "//:node_modules/rxjs",
     ],
 )
 

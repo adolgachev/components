@@ -1,9 +1,9 @@
-load("//tools:defaults.bzl", "ng_module", "ng_web_test_suite")
-load("//tools:defaults2.bzl", "ts_project")
+load("//tools:defaults.bzl", "ng_web_test_suite")
+load("//tools:defaults2.bzl", "ng_project", "ts_project")
 
 package(default_visibility = ["//visibility:public"])
 
-ng_module(
+ng_project(
     name = "dialog",
     srcs = glob(
         ["**/*.ts"],
@@ -14,6 +14,11 @@ ng_module(
         "**/*.css",
     ]),
     deps = [
+        "//:node_modules/@angular/core",
+        "//:node_modules/@angular/forms",
+        "//:node_modules/@angular/platform-browser",
+        "//:node_modules/@types/jasmine",
+        "//:node_modules/rxjs",
         "//src/cdk/testing",
         "//src/cdk/testing/testbed",
         "//src/material/button",
@@ -21,9 +26,6 @@ ng_module(
         "//src/material/dialog/testing",
         "//src/material/input",
         "//src/material/menu",
-        "@npm//@angular/forms",
-        "@npm//@angular/platform-browser",
-        "@npm//@types/jasmine",
     ],
 )
 
@@ -40,16 +42,14 @@ ts_project(
     name = "unit_tests_lib",
     testonly = True,
     srcs = glob(["**/*.spec.ts"]),
-    interop_deps = [
+    deps = [
         ":dialog",
+        "//:node_modules/@angular/core",
+        "//:node_modules/@angular/platform-browser",
         "//src/cdk/testing",
         "//src/cdk/testing/testbed",
         "//src/material/dialog",
         "//src/material/dialog/testing",
-    ],
-    deps = [
-        "//:node_modules/@angular/core",
-        "//:node_modules/@angular/platform-browser",
     ],
 )
 

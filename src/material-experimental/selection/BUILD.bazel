@@ -1,8 +1,9 @@
-load("//tools:defaults.bzl", "ng_module", "sass_binary", "sass_library")
+load("//tools:defaults.bzl", "sass_binary", "sass_library")
+load("//tools:defaults2.bzl", "ng_project")
 
 package(default_visibility = ["//visibility:public"])
 
-ng_module(
+ng_project(
     name = "selection",
     srcs = glob(
         ["**/*.ts"],
@@ -10,10 +11,11 @@ ng_module(
     ),
     assets = [":selection_column_scss"],
     deps = [
+        "//:node_modules/@angular/common",
+        "//:node_modules/@angular/core",
         "//src/cdk-experimental/selection",
         "//src/material/checkbox",
         "//src/material/table",
-        "@npm//@angular/core",
     ],
 )
 

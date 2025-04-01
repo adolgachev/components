@@ -3,18 +3,17 @@ load(
     "//tools:defaults.bzl",
     "extract_tokens",
     "markdown_to_html",
-    "ng_module",
     "ng_web_test_suite",
     "sass_binary",
     "sass_library",
 )
-load("//tools:defaults2.bzl", "ts_project")
+load("//tools:defaults2.bzl", "ng_project", "ts_project")
 
 package(default_visibility = ["//visibility:public"])
 
 exports_files(["theming/_theming.scss"])
 
-ng_module(
+ng_project(
     name = "core",
     srcs = glob(
         ["**/*.ts"],
@@ -29,6 +28,12 @@ ng_module(
         ":focus-indicators/structural-styles.css",
     ] + glob(["**/*.html"]),
     deps = [
+        "//:node_modules/@angular/animations",
+        "//:node_modules/@angular/common",
+        "//:node_modules/@angular/core",
+        "//:node_modules/@angular/forms",
+        "//:node_modules/@angular/platform-browser",
+        "//:node_modules/rxjs",
         "//src:dev_mode_types",
         "//src/cdk",
         "//src/cdk/a11y",
@@ -37,11 +42,6 @@ ng_module(
         "//src/cdk/keycodes",
         "//src/cdk/platform",
         "//src/cdk/private",
-        "@npm//@angular/animations",
-        "@npm//@angular/core",
-        "@npm//@angular/forms",
-        "@npm//@angular/platform-browser",
-        "@npm//rxjs",
     ],
 )
 
@@ -183,16 +183,14 @@ ts_project(
         ["**/*.spec.ts"],
         exclude = ["**/*.e2e.spec.ts"],
     ),
-    interop_deps = [
+    deps = [
         ":core",
+        "//:node_modules/@angular/core",
+        "//:node_modules/@angular/platform-browser",
         "//src/cdk/keycodes",
         "//src/cdk/platform",
         "//src/cdk/testing/private",
         "//src/material/testing",
-    ],
-    deps = [
-        "//:node_modules/@angular/core",
-        "//:node_modules/@angular/platform-browser",
     ],
 )
 
