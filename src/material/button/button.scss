@@ -1,4 +1,5 @@
 @use './button-base';
+@use '../core/style/icon-common';
 @use '../core/style/private' as style-private;
 @use '../core/style/vendor-prefixes';
 @use '../core/tokens/token-utils';
@@ -360,4 +361,9 @@
   $border-width: var(--mat-focus-indicator-border-width, #{$default-border-width});
   $offset: calc(#{$border-width} + 3px);
   margin: calc(#{$offset} * -1);
+}
+
+// Makes button icon not cut off/shrink making the icon visible to fix b/250063405
+.mat-mdc-button-base {
+  @include icon-common.icon-no-shrink();
 }
