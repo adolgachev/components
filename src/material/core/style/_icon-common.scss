@@ -1,0 +1,8 @@
+
+// Makes button icon not cut off/shrink making the icon visible to fix b/250063405
+@mixin icon-no-shrink() {
+  .mat-icon {
+    flex-shrink: 0;
+    min-height: min-content;  // stylelint-disable material/no-prefixes
+  }
+}
