@@ -439,6 +439,7 @@ describe('Row Chips', () => {
     describe('_hasInteractiveActions', () => {
       it('should return true if the chip has a remove icon', () => {
         testComponent.removable = true;
+        fixture.changeDetectorRef.markForCheck();
         fixture.detectChanges();
         expect(chipInstance._hasInteractiveActions()).toBe(true);
       });
@@ -446,12 +447,14 @@ describe('Row Chips', () => {
       it('should return true if the chip has an edit icon', () => {
         testComponent.editable = true;
         testComponent.showEditIcon = true;
+        fixture.changeDetectorRef.markForCheck();
         fixture.detectChanges();
         expect(chipInstance._hasInteractiveActions()).toBe(true);
       });
 
       it('should return true even with a non-interactive trailing icon', () => {
         testComponent.showTrailingIcon = true;
+        fixture.changeDetectorRef.markForCheck();
         fixture.detectChanges();
         expect(chipInstance._hasInteractiveActions()).toBe(true);
       });
@@ -461,6 +464,7 @@ describe('Row Chips', () => {
         chipInstance.primaryAction.isInteractive = false;
         testComponent.showTrailingIcon = true;
         testComponent.removable = false; // remove icon is interactive
+        fixture.changeDetectorRef.markForCheck();
         fixture.detectChanges();
 
         // The trailing icon is not interactive.
