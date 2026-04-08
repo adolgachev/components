@@ -11,9 +11,9 @@ import {
   computed,
   Directive,
   ElementRef,
+  effect,
   inject,
   input,
-  afterRenderEffect,
   OnInit,
   OnDestroy,
 } from '@angular/core';
@@ -90,7 +90,7 @@ export class TabPanel implements OnInit, OnDestroy {
   });
 
   constructor() {
-    afterRenderEffect(() => this._deferredContentAware.contentVisible.set(this.visible()));
+    effect(() => this._deferredContentAware.contentVisible.set(this.visible()));
   }
 
   ngOnInit() {

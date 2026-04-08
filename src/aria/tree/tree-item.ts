@@ -9,7 +9,6 @@
 import {
   Directive,
   ElementRef,
-  afterRenderEffect,
   booleanAttribute,
   computed,
   inject,
@@ -20,6 +19,7 @@ import {
   OnInit,
   OnDestroy,
   afterNextRender,
+  effect,
 } from '@angular/core';
 import {_IdGenerator} from '@angular/cdk/a11y';
 import {ComboboxTreePattern, TreeItemPattern, DeferredContentAware, HasElement} from '../private';
@@ -127,11 +127,12 @@ export class TreeItem<V> extends DeferredContentAware implements OnInit, OnDestr
         this.preserveContent.set(true);
       }
     });
-    // Connect the group's hidden state to the DeferredContentAware's visibility.
-    afterRenderEffect(() => {
-      this.tree()._pattern instanceof ComboboxTreePattern
-        ? this.contentVisible.set(true)
-        : this.contentVisible.set(this._pattern.expanded());
+
+    effect(() => {
+      // Connect the group's hidden state to the DeferredContentAware's visibility.
+      this.contentVisible.set(
+        this.tree()._pattern instanceof ComboboxTreePattern || this._pattern.expanded(),
+      );
     });
   }
 

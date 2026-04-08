@@ -7,12 +7,12 @@
  */
 
 import {
-  afterRenderEffect,
+  Directive,
+  ElementRef,
   booleanAttribute,
   computed,
   contentChild,
-  Directive,
-  ElementRef,
+  effect,
   inject,
   input,
   signal,
@@ -134,13 +134,13 @@ export class Combobox<V> {
   });
 
   constructor() {
-    afterRenderEffect(() => {
+    effect(() => {
       if (this.alwaysExpanded()) {
         this._pattern.expanded.set(true);
       }
     });
 
-    afterRenderEffect(() => {
+    effect(() => {
       if (
         !this._deferredContentAware?.contentVisible() &&
         (this._pattern.isFocused() || this.alwaysExpanded())

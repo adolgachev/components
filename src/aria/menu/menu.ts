@@ -7,12 +7,13 @@
  */
 
 import {
+  Directive,
+  ElementRef,
   afterRenderEffect,
   booleanAttribute,
   computed,
   contentChildren,
-  Directive,
-  ElementRef,
+  effect,
   inject,
   input,
   output,
@@ -154,7 +155,7 @@ export class Menu<V> {
       itemSelected: (value: V) => this.itemSelected.emit(value),
     });
 
-    afterRenderEffect(() => {
+    effect(() => {
       const parent = this.parent();
       if (parent instanceof MenuItem && parent.parent instanceof MenuBar) {
         this._deferredContentAware?.contentVisible.set(true);

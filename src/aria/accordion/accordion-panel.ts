@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.dev/license
  */
 
-import {Directive, ElementRef, afterRenderEffect, computed, inject, input} from '@angular/core';
+import {Directive, ElementRef, computed, effect, inject, input} from '@angular/core';
 import {_IdGenerator} from '@angular/cdk/a11y';
 import {DeferredContentAware, AccordionTriggerPattern} from '../private';
 
@@ -71,8 +71,8 @@ export class AccordionPanel {
   _pattern?: AccordionTriggerPattern;
 
   constructor() {
-    // Connect the panel's hidden state to the DeferredContentAware's visibility.
-    afterRenderEffect(() => {
+    effect(() => {
+      // Connect the panel's hidden state to the DeferredContentAware's visibility.
       this._deferredContentAware.contentVisible.set(this.visible());
     });
   }
