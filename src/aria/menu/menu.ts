@@ -170,11 +170,13 @@ export class Menu<V> {
     // submenus. In those cases, the ui pattern is calling focus() before the ui has a chance to
     // update the display property. The result is focus() being called on an element that is not
     // focusable. This simply retries focusing the element after render.
-    afterRenderEffect(() => {
-      if (this._pattern.visible()) {
-        const activeItem = untracked(() => this._pattern.inputs.activeItem());
-        this._pattern.listBehavior.goto(activeItem!);
-      }
+    afterRenderEffect({
+      write: () => {
+        if (this.visible()) {
+          const activeItem = untracked(() => this._pattern.inputs.activeItem());
+          this._pattern.listBehavior.goto(activeItem!);
+        }
+      },
     });
 
     afterRenderEffect(() => {
