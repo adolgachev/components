@@ -108,18 +108,22 @@ export class GridCellWidget {
   }
 
   constructor() {
-    afterRenderEffect(() => {
-      const activateEvent = this._pattern.lastActivateEvent();
-      if (activateEvent) {
-        this.activated.emit(activateEvent);
-      }
+    afterRenderEffect({
+      read: () => {
+        const activateEvent = this._pattern.lastActivateEvent();
+        if (activateEvent) {
+          this.activated.emit(activateEvent);
+        }
+      },
     });
 
-    afterRenderEffect(() => {
-      const deactivateEvent = this._pattern.lastDeactivateEvent();
-      if (deactivateEvent) {
-        this.deactivated.emit(deactivateEvent);
-      }
+    afterRenderEffect({
+      read: () => {
+        const deactivateEvent = this._pattern.lastDeactivateEvent();
+        if (deactivateEvent) {
+          this.deactivated.emit(deactivateEvent);
+        }
+      },
     });
   }
 
