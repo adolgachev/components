@@ -126,7 +126,7 @@ export class Menu<V> {
    * sometimes the items array is empty. The bug can be reproduced by switching this to use a
    * computed and then quickly opening and closing menus in the dev app.
    */
-  private readonly _itemPatterns = () => this._items().map(i => i._pattern);
+  private readonly _itemPatterns = computed(() => this._items().map(i => i._pattern));
 
   /** Whether the menu is visible. */
   readonly visible = computed(() => this._pattern.visible());
@@ -179,9 +179,7 @@ export class Menu<V> {
       },
     });
 
-    afterRenderEffect(() => {
-      this._pattern.setDefaultStateEffect();
-    });
+    afterRenderEffect({write: () => this._pattern.setDefaultStateEffect()});
   }
 
   /** Closes the menu. */

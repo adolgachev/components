@@ -8,6 +8,7 @@
 
 import {Directionality} from '@angular/cdk/bidi';
 import {
+  afterRenderEffect,
   booleanAttribute,
   computed,
   Directive,
@@ -16,7 +17,6 @@ import {
   input,
   model,
   signal,
-  afterRenderEffect,
   OnInit,
   OnDestroy,
 } from '@angular/core';
@@ -118,9 +118,7 @@ export class TabList implements OnInit, OnDestroy {
   });
 
   constructor() {
-    afterRenderEffect(() => {
-      this._pattern.setDefaultStateEffect();
-    });
+    afterRenderEffect({write: () => this._pattern.setDefaultStateEffect()});
 
     afterRenderEffect(() => {
       const tab = this._pattern.selectedTab();
