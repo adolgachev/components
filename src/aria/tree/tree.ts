@@ -12,6 +12,7 @@ import {
   afterRenderEffect,
   booleanAttribute,
   computed,
+  effect,
   inject,
   input,
   model,
@@ -170,7 +171,7 @@ export class Tree<V> {
       this._popup?._controls?.set(this._pattern as ComboboxTreePattern<V>);
     }
 
-    afterRenderEffect(() => {
+    effect(() => {
       if (typeof ngDevMode === 'undefined' || ngDevMode) {
         const violations = this._pattern.validate();
         for (const violation of violations) {
@@ -182,16 +183,18 @@ export class Tree<V> {
     // Resets default focus based on selection state until interacted.
     afterRenderEffect({write: () => this._pattern.setDefaultStateEffect()});
 
-    afterRenderEffect(() => {
-      const items = inputs.items();
-      const activeItem = untracked(() => inputs.activeItem());
+    afterRenderEffect({
+      write: () => {
+        const items = inputs.items();
+        const activeItem = untracked(() => inputs.activeItem());
 
-      if (!items.some(i => i === activeItem) && activeItem) {
-        this._pattern.treeBehavior.unfocus();
-      }
+        if (!items.some(i => i === activeItem) && activeItem) {
+          this._pattern.treeBehavior.unfocus();
+        }
+      },
     });
 
-    afterRenderEffect(() => {
+    effect(() => {
       if (!(this._pattern instanceof ComboboxTreePattern)) return;
 
       const items = inputs.items();
